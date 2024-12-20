@@ -1,0 +1,5 @@
+node_modules/
+node_modules/
+stock-simulation-frontend/node_modules/
+ethio_stock_simulation/.env
+env/
