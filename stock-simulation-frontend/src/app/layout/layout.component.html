@@ -1,0 +1,43 @@
+<mat-sidenav-container *ngIf="isLoggedIn" class="example-container">
+  <mat-sidenav mode="side" opened class="sidenav">
+    <mat-toolbar color="primary" class="sidenav-toolbar">Menu</mat-toolbar>
+    <mat-nav-list>
+      <!-- <button mat-button [routerLink]="['/publish-stock']">Company Stock</button> -->
+
+      <a
+  *ngIf="userRole === 'company_admin'"
+  mat-list-item
+  routerLink="/company-admin"
+  routerLinkActive="active"
+  [routerLinkActiveOptions]="{ exact: true }"
+  >Company Stock</a
+>
+      <a *ngIf="userRole === 'trader'" mat-list-item routerLink="/orders">Trader Orders</a>
+      <a *ngIf="userRole === 'trader'" mat-list-item routerLink="/stock-listing">Listed Company Stocks</a>
+      <a mat-list-item href="#" class="menu-item logout" (click)="onLogout()">Logout</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="main-toolbar">
+      <div *ngIf="userRole === 'company_admin'">
+      <!-- <h3>Company Information</h3> -->
+      <p><strong>Name:</strong> {{ companyName }}</p>
+      <!-- <p><strong>Sector:</strong> {{ companySector }}</p> -->
+    </div>
+      <span class="welcome-text">
+        Welcome, {{ username }} | User KYC Status:
+        <span *ngIf="kycStatus; else notVerified">Verified</span>
+        <ng-template #notVerified>Not Verified</ng-template>
+      </span>
+      <span class="spacer"></span>
+      <button mat-raised-button color="accent" (click)="onLogout()">Logout</button>
+    </mat-toolbar>
+    <router-outlet></router-outlet> <!-- Placeholder for dynamic content -->
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<!-- Optional message for unauthenticated users -->
+<div *ngIf="!isLoggedIn">
+  <router-outlet></router-outlet>
+</div>
